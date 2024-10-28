@@ -2,45 +2,27 @@
 
 import { useState } from "react";
 
-function InputBox({ commentsList, UpdateCommentsList, currentUser }) {
+function InputBox({ UpdateCommentsData, currentUser }) {
   let [inputValue, updateInputValue] = useState("");
-
-  //Need correct ID, accounting for inner arrays also
-  /*
-  function sumArrayLengths() {
-    if (currentUser) {
-      let sum = 0;
-      let totalLength = 0;
-      console.log(commentsList.length);
-
-      for (let i = 0; i < commentsList.length; i++) {
-        for (let i = 0; i < commentsList.replies.length; i++) {
-          sum += commentsList.replies.length;
-        }
-      }
-
-      totalLength = sum + commentsList.length;
-      return totalLength;
-    }
-  }
-    */
 
   function submitComment(e) {
     e.preventDefault();
-    UpdateCommentsList((prev) => {
-      return [
-        ...prev,
-        {
-          id: prev.length + 66,
-          content: inputValue,
-          createdAt: "Current time",
-          score: 0,
-          user: currentUser,
-          replies: [],
-          disabled: true,
-        },
-      ];
-    });
+    if (inputValue !== "") {
+      UpdateCommentsData((prev) => {
+        return [
+          ...prev,
+          {
+            id: prev.length + 66,
+            content: inputValue,
+            createdAt: "Current time",
+            score: 0,
+            user: currentUser,
+            replies: [],
+          },
+        ];
+      });
+      updateInputValue("");
+    }
   }
 
   return (
