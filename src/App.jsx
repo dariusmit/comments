@@ -6,15 +6,15 @@ import InputBox from "./components/InputBox";
 import { useEffect } from "react";
 
 function App() {
-  let [commentsData, UpdateCommentsData] = useState(null);
-  let [currentUser, setCurrentUser] = useState(null);
+  let [commentsData, updateCommentsData] = useState();
+  let [currentUser, setCurrentUser] = useState();
 
   async function getData() {
     const path = "./src/data/data.json";
     try {
       const req = await fetch(path);
       const res = await req.json();
-      UpdateCommentsData(res.comments);
+      updateCommentsData(res.comments);
       setCurrentUser(res.currentUser);
     } catch (e) {
       console.log("Error: " + e.message);
@@ -31,12 +31,12 @@ function App() {
         <CommentsList
           commentsData={commentsData}
           currentUser={currentUser}
-          UpdateCommentsData={UpdateCommentsData}
+          updateCommentsData={updateCommentsData}
         />
       )}
       {currentUser && (
         <InputBox
-          UpdateCommentsData={UpdateCommentsData}
+          updateCommentsData={updateCommentsData}
           currentUser={currentUser}
         />
       )}

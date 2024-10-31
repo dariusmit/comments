@@ -2,7 +2,7 @@
 
 import CommentsCard from "./CommentsCard";
 
-function CommentsList({ commentsData, UpdateCommentsData, currentUser }) {
+function CommentsList({ commentsData, updateCommentsData, currentUser }) {
   return (
     <>
       {commentsData &&
@@ -12,10 +12,24 @@ function CommentsList({ commentsData, UpdateCommentsData, currentUser }) {
             <div className="p-4" key={comment.id}>
               <CommentsCard
                 comment={comment}
-                UpdateCommentsData={UpdateCommentsData}
+                updateCommentsData={updateCommentsData}
                 currentUser={currentUser}
-                commentType="parent"
+                commentsData={commentsData}
               />
+              {comment.replies &&
+                comment.replies.length !== 0 &&
+                comment.replies.map((reply) => {
+                  return (
+                    <div key={reply.id} className="pl-6 pt-4">
+                      <CommentsCard
+                        comment={reply}
+                        updateCommentsData={updateCommentsData}
+                        currentUser={currentUser}
+                        commentsData={commentsData}
+                      />
+                    </div>
+                  );
+                })}
             </div>
           );
         })}

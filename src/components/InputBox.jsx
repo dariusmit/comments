@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 
-function InputBox({ UpdateCommentsData, currentUser }) {
+function InputBox({ updateCommentsData, currentUser }) {
   let [inputValue, updateInputValue] = useState("");
 
   function submitComment(e) {
     e.preventDefault();
     if (inputValue !== "") {
-      UpdateCommentsData((prev) => {
+      updateCommentsData((prev) => {
         return [
           ...prev,
           {

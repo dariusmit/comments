@@ -1,12 +1,13 @@
 "use strict";
 
 import { useState } from "react";
+import { produce } from "immer";
 
 function CommentsCard({
   comment,
   currentUser,
-  UpdateCommentsData,
-  commentType,
+  updateCommentsData,
+  commentsData,
 }) {
   let [score, changeScore] = useState(Number(comment.score));
   let [textAreaDisabled, changeTextAreaStatus] = useState(true);
@@ -44,17 +45,27 @@ function CommentsCard({
     changeTextAreaStatus(true);
   }
 
+  const parentStateCopy = structuredClone(commentsData);
   function deleteComment(id) {
-    if (commentType === "parent") {
-      UpdateCommentsData((prev) => {
-        console.log(prev);
-        return prev.filter((item) => item.id !== id);
-      });
-      console.log("parent deleted");
-    }
-    if (commentType === "child") {
-      //How?
-      console.log("child deleted");
+    for (let i = 0; i < commentsData.length; i++) {
+      if (commentsData[i].id === id) {
+        updateCommentsData((prev) => {
+          return prev.filter((item) => item.id !== id);
+        });
+        break;
+      } else {
+        if (commentsData[i].replies.length !== 0) {
+          for (let j = 0; j < commentsData[i].replies.length; j++) {
+            if (commentsData[i].replies[j].id === id) {
+              parentStateCopy[i].replies = parentStateCopy[i].replies.filter(
+                (item) => item.id !== id
+              );
+              updateCommentsData(parentStateCopy);
+              break;
+            }
+          }
+        }
+      }
     }
   }
 
@@ -179,7 +190,12 @@ function CommentsCard({
           </form>
         )}
       </div>
-      {reply &&
+    </>
+  );
+}
+
+/**
+       {reply &&
         reply.length !== 0 &&
         reply.map((reply) => {
           return (
@@ -187,13 +203,12 @@ function CommentsCard({
               <CommentsCard
                 comment={reply}
                 currentUser={currentUser}
-                commentType="child"
+                commentsData={commentsData}
+                updateCommentsData={updateCommentsData}
               />
             </div>
           );
         })}
-    </>
-  );
-}
+ */
 
 export default CommentsCard;
