@@ -3,6 +3,29 @@
 @tailwind utilities;
 
 body {
-    padding: 10px;
+    padding-left: 4.27vw;
+    padding-right: 4.27vw;
+    padding-top: 8.53vw;
+    padding-bottom: 8.53vw;
+    font-family: "Rubik", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
     background-color: #F5F6FA;
+    color: #67727E;
+}
+
+.textarea {
+    font-family: inherit;
+    font-size: inherit;
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    resize: both;
+    min-height: 40px;
+}
+
+.textarea:focus {
+    outline: none !important;
+    border: 1px solid #5357B6;
 }

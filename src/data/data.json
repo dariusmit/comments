@@ -45,7 +45,7 @@
               "png": "./images/avatars/image-ramsesmiron.png",
               "webp": "./images/avatars/image-ramsesmiron.webp"
             },
-            "username": "amyrobson"
+            "username": "ramsesmiron"
           },
           "replies": []
         },
@@ -76,21 +76,7 @@
           "png": "./images/avatars/image-ramsesmiron.png",
           "webp": "./images/avatars/image-amyrobson.webp"
         },
-        "username": "juliusomo"
-      },
-      "replies": []
-    },
-    {
-      "id": 6,
-      "content": "You've nailed the design and the responsiveness at various breakpoints works really well.",
-      "createdAt": "1 month ago",
-      "score": 2,
-      "user": {
-        "image": {
-          "png": "./images/avatars/image-amyrobson.png",
-          "webp": "./images/avatars/image-amyrobson.webp"
-        },
-        "username": "amyrobson"
+        "username": "ramsesmiron"
       },
       "replies": []
     }

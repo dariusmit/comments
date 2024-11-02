@@ -4,8 +4,13 @@ import { useState } from "react";
 
 function InputBox({ updateCommentsData, currentUser }) {
   let [inputValue, updateInputValue] = useState("");
+  const [emptyInputError, setInputError] = useState("");
 
   function submitComment(e) {
+    const date = new Date();
+    const hours = date.getHours();
+    const minutes = "0" + date.getMinutes();
+    const currentTime = hours + ":" + minutes.substring(1, 3);
     e.preventDefault();
     if (inputValue !== "") {
       updateCommentsData((prev) => {
@@ -14,7 +19,7 @@ function InputBox({ updateCommentsData, currentUser }) {
           {
             id: prev.length + 66,
             content: inputValue,
-            createdAt: "Current time",
+            createdAt: currentTime,
             score: 0,
             user: currentUser,
             replies: [],
@@ -26,9 +31,21 @@ function InputBox({ updateCommentsData, currentUser }) {
   }
 
   return (
-    <form className="p-4 w-full" onSubmit={submitComment}>
+    <form
+      className="p-[4.27vw] bg-white rounded-md w-full"
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (inputValue !== "") {
+          setInputError("");
+          updateInputValue("");
+          return submitComment(e);
+        } else {
+          return setInputError("Please enter a comment text...");
+        }
+      }}
+    >
       <textarea
-        className="border rounded-md w-full p-4 mb-4"
+        className="border rounded-md w-full p-4"
         placeholder="Add a comment..."
         rows="4"
         cols="50"
@@ -36,12 +53,15 @@ function InputBox({ updateCommentsData, currentUser }) {
           updateInputValue(e.target.value);
         }}
       />
+      <p className="text-red-500 text-[3.47vw] mb-[3.27vw]">
+        {emptyInputError}
+      </p>
       <div className="flex items-center justify-between w-full">
         <img className="w-[32px] h-[32px]" src={currentUser.image.png} />
         <input
-          className=" w-1/3 p-4 bg-[#5357B6] rounded-md text-white font-bold"
+          className=" w-1/3 px-4 py-3 bg-[#5357B6] rounded-lg text-white"
           type="submit"
-          value="Send"
+          value="SEND"
         />
       </div>
     </form>
