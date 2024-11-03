@@ -51,9 +51,14 @@ function InputBox({ updateCommentsData, currentUser, commentsData }) {
           updateInputValue(e.target.value);
         }}
       />
-      <p className="text-red-500 text-[3.47vw] mb-[3.27vw]">
+      <motion.p
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
+        className="text-red-500 text-[3.47vw] mb-[3.27vw]"
+      >
         {emptyInputError}
-      </p>
+      </motion.p>
       <div className="flex items-center justify-between w-full">
         <img className="w-[32px] h-[32px]" src={currentUser.image.png} />
         <motion.input
