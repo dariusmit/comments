@@ -9,10 +9,6 @@ function App() {
   const [commentsData, updateCommentsData] = useState();
   const [currentUser, setCurrentUser] = useState();
 
-  useEffect(() => {
-    localStorage.setItem("comments", JSON.stringify(commentsData));
-  }, [commentsData]);
-
   async function getData() {
     const path = "./src/data/data.json";
     try {

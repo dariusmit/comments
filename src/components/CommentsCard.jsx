@@ -3,12 +3,14 @@
 import { useState } from "react";
 import swal from "sweetalert";
 import useDateHelpers from "../hooks/useDateHelpers";
+import { motion } from "framer-motion";
 
 function CommentsCard({
   comment,
   currentUser,
   updateCommentsData,
   commentsData,
+  isVisible,
 }) {
   const [score, changeScore] = useState(Number(comment.score));
   const [textAreaDisabled, changeTextAreaStatus] = useState(true);
@@ -139,7 +141,12 @@ function CommentsCard({
 
   return (
     <>
-      <div className="bg-white p-4 rounded-md mb-[4.27vw]">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
+        className="bg-white p-4 rounded-md mb-[4.27vw]"
+      >
         <div className="flex items-center mb-[4.27vw]">
           <img
             className="w-[8.53vw] h-[8.53vw] mr-[4.27vw]"
@@ -161,8 +168,8 @@ function CommentsCard({
         <span
           className={
             textAreaDisabled === false
-              ? "pb-2 rounded-md border border-[#5357B6] p-2 w-full mb-[4.27vw] textarea text-[4.27vw] leading-[6.4vw]"
-              : "pb-2 rounded-md border border-white w-full mb-[4.27vw] textarea text-[4.27vw] leading-[6.4vw]"
+              ? "pb-2 rounded-md border border-[#5357B6] !resize-none p-2 w-full mb-[4.27vw] textarea text-[4.27vw] leading-[6.4vw]"
+              : "pb-2 rounded-md border border-white !resize-none w-full mb-[4.27vw] textarea text-[4.27vw] leading-[6.4vw]"
           }
           role="textbox"
           onChange={(e) => updateEditValue(e.target.value)}
@@ -170,18 +177,22 @@ function CommentsCard({
         >{` ${comment.content}`}</span>
         <div className="flex justify-between items-center">
           <div className="flex justify-between font-medium bg-[#F5F6FA] px-4 py-2 rounded-lg min-w-[20vw]">
-            <button
+            <motion.button
+              whileHover={{ scale: 1.6 }}
+              whileTap={{ scale: 0.9 }}
               className="mr-2 text-[#C5C6EF]"
               onClick={() => {
                 changeScore((prev) => prev + 1);
               }}
             >
               +
-            </button>
+            </motion.button>
             <p className="flex justify-center mr-2 min-w-[10vw] text-[#5357B6]">
               {score}
             </p>
-            <button
+            <motion.button
+              whileHover={{ scale: 1.6 }}
+              whileTap={{ scale: 0.9 }}
               className="text-[#C5C6EF]"
               onClick={
                 score !== 0
@@ -192,7 +203,7 @@ function CommentsCard({
               }
             >
               -
-            </button>
+            </motion.button>
           </div>
           {comment.user.username === currentUser.username ? (
             <>
@@ -247,7 +258,7 @@ function CommentsCard({
           ) : (
             <div
               onClick={replyToComment}
-              className="flex items-center justify-center w-[17.6vw]"
+              className="flex items-center hover:cursor-pointer justify-center w-[17.6vw]"
             >
               <img className="mr-[1.6vw]" src="../../images/icon-reply.svg" />
               <button className="text-[#5357B6] font-medium">Reply</button>
@@ -255,7 +266,10 @@ function CommentsCard({
           )}
         </div>
         {replyBox && (
-          <form
+          <motion.form
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.3 }}
             className="p-4 w-full"
             onSubmit={(e) => {
               e.preventDefault();
@@ -280,15 +294,17 @@ function CommentsCard({
             <p className="text-red-500 text-[3.47vw] mb-4">{emptyInputError}</p>
             <div className="flex items-center justify-between w-full">
               <img className="w-[32px] h-[32px]" src={currentUser.image.png} />
-              <input
+              <motion.input
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 className=" w-1/3 p-2 bg-[#5357B6] rounded-md text-white"
                 type="submit"
                 value="Reply"
               />
             </div>
-          </form>
+          </motion.form>
         )}
-      </div>
+      </motion.div>
     </>
   );
 }

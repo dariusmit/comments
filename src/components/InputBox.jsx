@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import useDateHelpers from "../hooks/useDateHelpers";
+import { motion } from "framer-motion";
 
 function InputBox({ updateCommentsData, currentUser, commentsData }) {
   const [inputValue, updateInputValue] = useState("");
@@ -55,7 +56,9 @@ function InputBox({ updateCommentsData, currentUser, commentsData }) {
       </p>
       <div className="flex items-center justify-between w-full">
         <img className="w-[32px] h-[32px]" src={currentUser.image.png} />
-        <input
+        <motion.input
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
           className=" w-1/3 px-4 py-3 bg-[#5357B6] rounded-lg text-white"
           type="submit"
           value="SEND"
