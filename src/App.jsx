@@ -6,8 +6,8 @@ import InputBox from "./components/InputBox";
 import { useEffect } from "react";
 
 function App() {
-  let [commentsData, updateCommentsData] = useState();
-  let [currentUser, setCurrentUser] = useState();
+  const [commentsData, updateCommentsData] = useState();
+  const [currentUser, setCurrentUser] = useState();
 
   useEffect(() => {
     localStorage.setItem("comments", JSON.stringify(commentsData));
@@ -42,6 +42,7 @@ function App() {
         <InputBox
           updateCommentsData={updateCommentsData}
           currentUser={currentUser}
+          commentsData={commentsData}
         />
       )}
     </div>

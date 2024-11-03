@@ -1,30 +1,27 @@
 "use strict";
 
 import { useState } from "react";
+import useDateHelpers from "../hooks/useDateHelpers";
 
-function InputBox({ updateCommentsData, currentUser }) {
-  let [inputValue, updateInputValue] = useState("");
+function InputBox({ updateCommentsData, currentUser, commentsData }) {
+  const [inputValue, updateInputValue] = useState("");
   const [emptyInputError, setInputError] = useState("");
+  const { day, currentTime, currentDate } = useDateHelpers();
+
+  const newCommentObject = {
+    id: commentsData.length + 66,
+    content: inputValue,
+    createdAt: `${currentDate} ${day}, ${currentTime}`,
+    score: 0,
+    user: currentUser,
+    replies: [],
+  };
 
   function submitComment(e) {
-    const date = new Date();
-    const hours = date.getHours();
-    const minutes = "0" + date.getMinutes();
-    const currentTime = hours + ":" + minutes.substring(1, 3);
     e.preventDefault();
     if (inputValue !== "") {
       updateCommentsData((prev) => {
-        return [
-          ...prev,
-          {
-            id: prev.length + 66,
-            content: inputValue,
-            createdAt: currentTime,
-            score: 0,
-            user: currentUser,
-            replies: [],
-          },
-        ];
+        return [...prev, newCommentObject];
       });
       updateInputValue("");
     }

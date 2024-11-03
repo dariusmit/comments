@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import swal from "sweetalert";
+import useDateHelpers from "../hooks/useDateHelpers";
 
 function CommentsCard({
   comment,
@@ -9,19 +10,22 @@ function CommentsCard({
   updateCommentsData,
   commentsData,
 }) {
-  let [score, changeScore] = useState(Number(comment.score));
-  let [textAreaDisabled, changeTextAreaStatus] = useState(true);
-  let [idCounter, setIDcounter] = useState(99);
-  let [replyBox, enableReplyBox] = useState(false);
-  let [replyValue, updateReplyValue] = useState("");
-  let [editValue, updateEditValue] = useState("");
-  const parentStateCopy = structuredClone(commentsData);
+  const [score, changeScore] = useState(Number(comment.score));
+  const [textAreaDisabled, changeTextAreaStatus] = useState(true);
+  const [idCounter, setIDcounter] = useState(99);
+  const [replyBox, enableReplyBox] = useState(false);
+  const [replyValue, updateReplyValue] = useState("");
+  const [editValue, updateEditValue] = useState("");
   const [emptyInputError, setInputError] = useState("");
 
-  const editedCommentObject = {
+  const parentStateCopy = structuredClone(commentsData);
+
+  const { day, currentTime, currentDate } = useDateHelpers();
+
+  const newCommentObject = {
     id: comment.replies.length + idCounter,
-    content: editValue,
-    createdAt: "Current time",
+    content: editValue !== "" ? editValue : replyValue,
+    createdAt: `${currentDate} ${day}, ${currentTime}`,
     score: 0,
     user: currentUser,
     replies: [],
@@ -31,14 +35,14 @@ function CommentsCard({
     if (editValue !== "") {
       for (let i = 0; i < commentsData.length; i++) {
         if (commentsData[i].id === id) {
-          parentStateCopy[i] = editedCommentObject;
+          parentStateCopy[i] = newCommentObject;
           updateCommentsData(parentStateCopy);
           break;
         } else {
           if (commentsData[i].replies.length !== 0) {
             for (let j = 0; j < commentsData[i].replies.length; j++) {
               if (commentsData[i].replies[j].id === id) {
-                parentStateCopy[i].replies = editedCommentObject;
+                parentStateCopy[i].replies = newCommentObject;
                 updateCommentsData(parentStateCopy);
                 break;
               }
@@ -81,15 +85,6 @@ function CommentsCard({
     });
   }
 
-  const newReplyObject = {
-    id: comment.replies.length + idCounter,
-    content: replyValue,
-    createdAt: "Current time",
-    score: 0,
-    user: currentUser,
-    replies: [],
-  };
-
   function replyToComment(e, id) {
     e.preventDefault();
     if (replyBox) {
@@ -100,14 +95,14 @@ function CommentsCard({
     if (replyValue !== "") {
       for (let i = 0; i < commentsData.length; i++) {
         if (commentsData[i].id === id) {
-          parentStateCopy[i].replies.push(newReplyObject);
+          parentStateCopy[i].replies.push(newCommentObject);
           updateCommentsData(parentStateCopy);
           break;
         } else {
           if (commentsData[i].replies.length !== 0) {
             for (let j = 0; j < commentsData[i].replies.length; j++) {
               if (commentsData[i].replies[j].id === id) {
-                parentStateCopy[i].replies.push(newReplyObject);
+                parentStateCopy[i].replies.push(newCommentObject);
                 updateCommentsData(parentStateCopy);
                 break;
               }
@@ -117,6 +112,28 @@ function CommentsCard({
       }
       setIDcounter((prev) => prev + 1);
       updateReplyValue("");
+    }
+  }
+  function discardEdit(id) {
+    let savedBodyText = "";
+    for (let i = 0; i < commentsData.length; i++) {
+      if (commentsData[i].id === id) {
+        savedBodyText = parentStateCopy[i].content;
+        parentStateCopy[i].content = `${savedBodyText} `;
+        updateCommentsData(parentStateCopy);
+        break;
+      } else {
+        if (commentsData[i].replies.length !== 0) {
+          for (let j = 0; j < commentsData[i].replies.length; j++) {
+            if (commentsData[i].replies[j].id === id) {
+              savedBodyText = parentStateCopy[i].replies[j].content;
+              parentStateCopy[i].replies[j].content = `${savedBodyText} `;
+              updateCommentsData(parentStateCopy);
+              break;
+            }
+          }
+        }
+      }
     }
   }
 
@@ -204,7 +221,10 @@ function CommentsCard({
                 {!textAreaDisabled ? (
                   <button
                     className="mr-2"
-                    onClick={() => changeTextAreaStatus(true)}
+                    onClick={() => {
+                      changeTextAreaStatus(true);
+                      discardEdit(comment.id);
+                    }}
                   >
                     Discard
                   </button>
