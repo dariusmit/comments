@@ -10,7 +10,6 @@ function CommentsCard({
   currentUser,
   updateCommentsData,
   commentsData,
-  isVisible,
 }) {
   const [score, changeScore] = useState(Number(comment.score));
   const [textAreaDisabled, changeTextAreaStatus] = useState(true);
@@ -29,6 +28,7 @@ function CommentsCard({
     content: editValue !== "" ? editValue : replyValue,
     createdAt: `${currentDate} ${day}, ${currentTime}`,
     score: 0,
+    replyingTo: comment.user.username,
     user: currentUser,
     replies: [],
   };
@@ -162,19 +162,35 @@ function CommentsCard({
           )}
           <p>{comment.createdAt}</p>
         </div>
-        <p className="text-[#5357B6] font-medium">
-          {comment.replyingTo !== undefined ? `@${comment.replyingTo}` : null}
-        </p>
-        <span
+        <div
           className={
             textAreaDisabled === false
-              ? "pb-2 rounded-md border border-[#5357B6] !resize-none p-2 w-full mb-[4.27vw] textarea text-[4.27vw] leading-[6.4vw]"
-              : "pb-2 rounded-md border border-white !resize-none w-full mb-[4.27vw] textarea text-[4.27vw] leading-[6.4vw]"
+              ? "rounded-md border border-[#5357B6] !resize-none mb-[4.27vw] textarea text-[4.27vw] leading-[6.4vw] break-words"
+              : "rounded-md border border-white !resize-none mb-[4.27vw] textarea text-[4.27vw] leading-[6.4vw] break-words"
           }
-          role="textbox"
-          onChange={(e) => updateEditValue(e.target.value)}
-          contentEditable={!textAreaDisabled}
-        >{` ${comment.content}`}</span>
+        >
+          <p
+            className={
+              textAreaDisabled === false
+                ? "text-[#5357B6] font-medium pl-4 py-2"
+                : "text-[#5357B6] font-medium"
+            }
+          >
+            {comment.replyingTo !== undefined ? `@${comment.replyingTo}` : null}
+          </p>
+          <span
+            className={
+              textAreaDisabled === false
+                ? "!resize-none px-4 pb-4 textarea text-[4.27vw] leading-[6.4vw] break-words focus:border-none focus:outline-none"
+                : "!resize-none mb-[4.27vw] textarea text-[4.27vw] leading-[6.4vw] break-words focus:border-none focus:outline-none"
+            }
+            role="textbox"
+            onChange={(e) => updateEditValue(e.target.value)}
+            contentEditable={!textAreaDisabled}
+          >
+            {comment.content}
+          </span>
+        </div>
         <div className="flex justify-between items-center">
           <div className="flex justify-between font-medium bg-[#F5F6FA] px-4 py-2 rounded-lg min-w-[20vw]">
             <motion.button
@@ -194,13 +210,9 @@ function CommentsCard({
               whileHover={{ scale: 1.6 }}
               whileTap={{ scale: 0.9 }}
               className="text-[#C5C6EF]"
-              onClick={
-                score !== 0
-                  ? () => {
-                      changeScore((prev) => prev - 1);
-                    }
-                  : null
-              }
+              onClick={() => {
+                changeScore((prev) => prev - 1);
+              }}
             >
               -
             </motion.button>
@@ -282,15 +294,20 @@ function CommentsCard({
               }
             }}
           >
-            <textarea
-              className="border rounded-md w-full p-4 mt-4"
-              placeholder={`${comment.user.username} Add a reply`}
-              rows="4"
-              cols="50"
-              onChange={(e) => {
-                updateReplyValue(e.target.value);
-              }}
-            />
+            <div className="border border-[#5357B6] rounded-md w-full mt-4">
+              <p className="text-[#5357B6] font-medium pl-4 pt-2 pb-2">
+                @{comment.user.username}
+              </p>
+              <textarea
+                className="w-full px-4 pb-4 focus:border-none focus:outline-none"
+                placeholder="add a reply..."
+                rows="4"
+                cols="50"
+                onChange={(e) => {
+                  updateReplyValue(e.target.value);
+                }}
+              />
+            </div>
             <motion.p
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1 }}
