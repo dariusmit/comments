@@ -3,6 +3,7 @@
 import { useState } from "react";
 import useDateHelpers from "../hooks/useDateHelpers";
 import { motion } from "framer-motion";
+import { comment } from "postcss";
 
 function InputBox({ updateCommentsData, currentUser, commentsData }) {
   const [inputValue, updateInputValue] = useState("");
@@ -43,8 +44,10 @@ function InputBox({ updateCommentsData, currentUser, commentsData }) {
       }}
     >
       <textarea
+        id={commentsData.length + 999}
         className="border rounded-md w-full p-4 focus:outline-none focus:!border-[#5357B6]"
         placeholder="add a comment..."
+        value={inputValue}
         rows="4"
         cols="50"
         onChange={(e) => {

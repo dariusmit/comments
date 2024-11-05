@@ -16,8 +16,7 @@ body {
 }
 
 .textarea {
-    font-family: inherit;
-    font-size: inherit;
+    field-sizing: content;
     display: block;
     width: 100%;
     overflow: hidden;

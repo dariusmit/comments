@@ -12,6 +12,7 @@ function ReplyBox({
 
   return (
     <motion.form
+      id={comment.id}
       initial={{ opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3 }}
@@ -32,6 +33,7 @@ function ReplyBox({
           @{comment.user.username}
         </p>
         <textarea
+          id={comment.id}
           className="w-full px-4 pb-4 focus:border-none focus:outline-none"
           placeholder="add a reply..."
           rows="4"
