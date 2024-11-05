@@ -44,7 +44,7 @@ function InputBox({ updateCommentsData, currentUser, commentsData }) {
     >
       <textarea
         className="border rounded-md w-full p-4 focus:outline-none focus:!border-[#5357B6]"
-        placeholder="Add a comment..."
+        placeholder="add a comment..."
         rows="4"
         cols="50"
         onChange={(e) => {
