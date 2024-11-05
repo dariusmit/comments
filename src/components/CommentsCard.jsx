@@ -12,18 +12,21 @@ function CommentsCard({
   currentUser,
   updateCommentsData,
   commentsData,
+  idCounter,
+  setIDcounter,
 }) {
   const [scoreView, updateScoreView] = useState(Number(comment.score));
   const [textAreaDisabled, changeTextAreaStatus] = useState(true);
-  const [idCounter, setIDcounter] = useState(99);
   const [replyBoxEnabled, enableReplyBox] = useState(false);
   const [replyValue, updateReplyValue] = useState("");
-  const [editValue, updateEditValue] = useState("");
+  const [editValue, updateEditValue] = useState(comment.content);
 
   const { day, currentTime, currentDate } = useDateHelpers();
 
+  const parentStateCopy = structuredClone(commentsData);
+
   const newCommentObject = {
-    id: comment.replies.length + idCounter,
+    id: idCounter,
     content: editValue !== "" ? editValue : replyValue,
     createdAt: `${currentDate} ${day}, ${currentTime}`,
     score: 0,
@@ -32,9 +35,7 @@ function CommentsCard({
     replies: [],
   };
 
-  const parentStateCopy = structuredClone(commentsData);
-
-  function saveEditedComment(id) {
+  function updateComment(id) {
     if (editValue !== "") {
       for (let i = 0; i < commentsData.length; i++) {
         if (commentsData[i].id === id) {
@@ -59,29 +60,6 @@ function CommentsCard({
       changeTextAreaStatus(true);
     } else {
       deleteComment(id);
-    }
-  }
-
-  function discardEdit(id) {
-    for (let i = 0; i < commentsData.length; i++) {
-      if (commentsData[i].id === id) {
-        //Rerender again with old state
-        parentStateCopy[i].content = `${parentStateCopy[i].content} `;
-        updateCommentsData(parentStateCopy);
-        break;
-      } else {
-        if (commentsData[i].replies.length !== 0) {
-          for (let j = 0; j < commentsData[i].replies.length; j++) {
-            if (commentsData[i].replies[j].id === id) {
-              //Rerender again with old state
-              parentStateCopy[i].replies[j].content =
-                parentStateCopy[i].replies[j].content;
-              updateCommentsData(parentStateCopy);
-              break;
-            }
-          }
-        }
-      }
     }
   }
 
@@ -229,7 +207,7 @@ function CommentsCard({
             onChange={(e) => updateEditValue(e.target.value)}
             disabled={textAreaDisabled}
             defaultValue={comment.content}
-          />
+          ></textarea>
         </div>
         <div className="flex justify-between items-center">
           <div className="flex justify-between font-medium bg-[#F5F6FA] px-4 py-2 rounded-lg min-w-[20vw]">
@@ -263,11 +241,11 @@ function CommentsCard({
             comment={comment}
             currentUser={currentUser}
             textAreaDisabled={textAreaDisabled}
-            saveEditedComment={saveEditedComment}
+            updateComment={updateComment}
             changeTextAreaStatus={changeTextAreaStatus}
-            discardEdit={discardEdit}
             deleteComment={deleteComment}
             replyToComment={replyToComment}
+            updateEditValue={updateEditValue}
           />
         </div>
         {replyBoxEnabled && (

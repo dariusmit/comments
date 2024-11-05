@@ -2,7 +2,13 @@
 
 import CommentsCard from "./CommentsCard";
 
-function CommentsList({ commentsData, updateCommentsData, currentUser }) {
+function CommentsList({
+  commentsData,
+  updateCommentsData,
+  currentUser,
+  idCounter,
+  setIDcounter,
+}) {
   return (
     <>
       {commentsData &&
@@ -15,6 +21,8 @@ function CommentsList({ commentsData, updateCommentsData, currentUser }) {
                 updateCommentsData={updateCommentsData}
                 currentUser={currentUser}
                 commentsData={commentsData}
+                idCounter={idCounter}
+                setIDcounter={setIDcounter}
               />
               <div className="border-l-2">
                 {comment.replies &&
@@ -28,6 +36,8 @@ function CommentsList({ commentsData, updateCommentsData, currentUser }) {
                             updateCommentsData={updateCommentsData}
                             currentUser={currentUser}
                             commentsData={commentsData}
+                            idCounter={idCounter}
+                            setIDcounter={setIDcounter}
                           />
                         </div>
                       </div>

@@ -1,12 +1,14 @@
+"use strict";
+
 function ReplyButtonsStack({
   comment,
   currentUser,
   textAreaDisabled,
-  saveEditedComment,
+  updateComment,
   changeTextAreaStatus,
-  discardEdit,
   deleteComment,
   replyToComment,
+  updateEditValue,
 }) {
   return (
     <>
@@ -16,9 +18,11 @@ function ReplyButtonsStack({
             {!textAreaDisabled ? (
               <button
                 className="mr-2 text-[#5357B6]"
-                onClick={() => saveEditedComment(comment.id)}
+                onClick={() => {
+                  updateComment(comment.id);
+                }}
               >
-                Save
+                UPDATE
               </button>
             ) : (
               <div className="flex items-center justify-center">
@@ -31,17 +35,7 @@ function ReplyButtonsStack({
                 </button>
               </div>
             )}
-            {!textAreaDisabled ? (
-              <button
-                className="mr-2"
-                onClick={() => {
-                  changeTextAreaStatus(true);
-                  discardEdit(comment.id);
-                }}
-              >
-                Discard
-              </button>
-            ) : (
+            {textAreaDisabled && (
               <div className="flex items-center justify-center">
                 <img
                   className="mr-[2.13vw]"
@@ -59,7 +53,10 @@ function ReplyButtonsStack({
         </>
       ) : (
         <div
-          onClick={replyToComment}
+          onClick={(e) => {
+            updateEditValue("");
+            replyToComment(e, comment.id);
+          }}
           className="flex items-center hover:cursor-pointer justify-center w-[17.6vw]"
         >
           <img className="mr-[1.6vw]" src="../../images/icon-reply.svg" />

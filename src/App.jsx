@@ -8,6 +8,9 @@ import { useEffect } from "react";
 function App() {
   const [commentsData, updateCommentsData] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
+  const [idCounter, setIDcounter] = useState(() => {
+    return JSON.parse(localStorage.getItem("id counter")) || 99;
+  });
   const savedComments = JSON.parse(localStorage.getItem("comments")) || [];
   const savedUser = JSON.parse(localStorage.getItem("current user")) || {};
 
@@ -28,6 +31,10 @@ function App() {
   useEffect(() => {
     localStorage.setItem("current user", JSON.stringify(currentUser));
   }, [currentUser]);
+
+  useEffect(() => {
+    localStorage.setItem("id counter", JSON.stringify(idCounter));
+  }, [idCounter]);
 
   async function getData() {
     const path = "./src/data/data.json";
@@ -58,6 +65,8 @@ function App() {
           commentsData={commentsData}
           currentUser={currentUser}
           updateCommentsData={updateCommentsData}
+          idCounter={idCounter}
+          setIDcounter={setIDcounter}
         />
       )}
       {currentUser && Object.keys(currentUser).length > 0 && (
@@ -65,6 +74,8 @@ function App() {
           updateCommentsData={updateCommentsData}
           currentUser={currentUser}
           commentsData={commentsData}
+          idCounter={idCounter}
+          setIDcounter={setIDcounter}
         />
       )}
     </div>

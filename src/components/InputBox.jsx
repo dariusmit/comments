@@ -3,15 +3,20 @@
 import { useState } from "react";
 import useDateHelpers from "../hooks/useDateHelpers";
 import { motion } from "framer-motion";
-import { comment } from "postcss";
 
-function InputBox({ updateCommentsData, currentUser, commentsData }) {
+function InputBox({
+  updateCommentsData,
+  currentUser,
+  commentsData,
+  idCounter,
+  setIDcounter,
+}) {
   const [inputValue, updateInputValue] = useState("");
   const [emptyInputError, setInputError] = useState("");
   const { day, currentTime, currentDate } = useDateHelpers();
 
   const newCommentObject = {
-    id: commentsData.length + 66,
+    id: idCounter,
     content: inputValue,
     createdAt: `${currentDate} ${day}, ${currentTime}`,
     score: 0,
@@ -26,11 +31,15 @@ function InputBox({ updateCommentsData, currentUser, commentsData }) {
         return [...prev, newCommentObject];
       });
       updateInputValue("");
+      setIDcounter((prev) => prev + 1);
     }
   }
 
   return (
-    <form
+    <motion.form
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5 }}
       className="p-[4.27vw] bg-white rounded-md w-full"
       onSubmit={(e) => {
         e.preventDefault();
@@ -72,7 +81,7 @@ function InputBox({ updateCommentsData, currentUser, commentsData }) {
           value="SEND"
         />
       </div>
-    </form>
+    </motion.form>
   );
 }
 
