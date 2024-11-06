@@ -3,6 +3,7 @@
 import { useState } from "react";
 import useDateHelpers from "../hooks/useDateHelpers";
 import { motion } from "framer-motion";
+import TextareaAutosize from "react-textarea-autosize";
 
 function InputBox({
   updateCommentsData,
@@ -52,13 +53,11 @@ function InputBox({
         }
       }}
     >
-      <textarea
+      <TextareaAutosize
         id={commentsData.length + 999}
         className="border rounded-md w-full p-4 focus:outline-none focus:!border-[#5357B6]"
         placeholder="add a comment..."
         value={inputValue}
-        rows="4"
-        cols="50"
         onChange={(e) => {
           updateInputValue(e.target.value);
         }}

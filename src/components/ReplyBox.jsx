@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import TextareaAutosize from "react-textarea-autosize";
 
 function ReplyBox({
   comment,
@@ -34,12 +35,10 @@ function ReplyBox({
         <p className="text-[#5357B6] font-medium pl-4 pt-2 pb-2">
           @{comment.user.username}
         </p>
-        <textarea
+        <TextareaAutosize
           id={comment.id}
           className="w-full px-4 pb-4 focus:border-none focus:outline-none"
           placeholder="add a reply..."
-          rows="4"
-          cols="50"
           onChange={(e) => {
             updateReplyValue(e.target.value);
           }}

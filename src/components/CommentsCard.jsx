@@ -6,6 +6,7 @@ import useDateHelpers from "../hooks/useDateHelpers";
 import { motion } from "framer-motion";
 import ReplyBox from "./ReplyBox";
 import ReplyButtonsStack from "./ReplyButtonsStack";
+import TextareaAutosize from "react-textarea-autosize";
 
 function CommentsCard({
   comment,
@@ -191,23 +192,16 @@ function CommentsCard({
             textAreaDisabled === false ? `border-[#5357B6]` : `border-white`
           }`}
         >
-          <p
-            className={`text-[#5357B6] font-medium ${
-              textAreaDisabled === false && `pl-4 py-2`
-            }`}
-          >
+          <p className={`text-[#5357B6] font-medium`}>
             {comment.replyingTo !== undefined && `@${comment.replyingTo}`}
           </p>
-          <textarea
+          <TextareaAutosize
             id={comment.id}
-            className={`!resize-none textarea text-[4.27vw] disabled:bg-white leading-[6.4vw] break-words focus:border-none focus:outline-none ${
-              textAreaDisabled === false ? `px-4 pb-4` : `mb-[4.27vw]`
-            }`}
-            role="textbox"
+            className={`!resize-none textarea text-[4.27vw] disabled:bg-white leading-[6.4vw] break-words focus:border-none focus:outline-none`}
             onChange={(e) => updateEditValue(e.target.value)}
             disabled={textAreaDisabled}
             defaultValue={comment.content}
-          ></textarea>
+          />
         </div>
         <div className="flex justify-between items-center">
           <div className="flex justify-between font-medium bg-[#F5F6FA] px-4 py-2 rounded-lg min-w-[20vw]">
