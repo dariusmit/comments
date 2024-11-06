@@ -19,7 +19,7 @@ function ReplyBox({
       initial={{ opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.3 }}
-      className="p-4 w-full"
+      className="p-4 w-full desktop:p-0"
       onSubmit={(e) => {
         e.preventDefault();
         if (replyValue !== "") {
@@ -31,13 +31,13 @@ function ReplyBox({
         }
       }}
     >
-      <div className="border border-[#5357B6] rounded-md w-full mt-4">
+      <div className="border border-[#5357B6] rounded-md w-full mt-4 desktop:mt-2">
         <p className="text-[#5357B6] font-medium pl-4 pt-2 pb-2">
           @{comment.user.username}
         </p>
         <TextareaAutosize
           id={comment.id}
-          className="w-full px-4 pb-4 focus:border-none focus:outline-none"
+          className="w-full resize-none px-4 pb-4 focus:border-none focus:outline-none"
           placeholder="add a reply..."
           onChange={(e) => {
             updateReplyValue(e.target.value);
@@ -48,7 +48,7 @@ function ReplyBox({
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
-        className="text-red-500 text-[3.47vw] mb-4"
+        className="text-red-500 text-[3.47vw] mb-4 desktop:text-[0.9vw] desktop:mb-[1.11vw] desktop:mt-2"
       >
         {emptyInputError}
       </motion.p>

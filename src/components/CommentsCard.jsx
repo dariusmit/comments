@@ -170,45 +170,54 @@ function CommentsCard({
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
-        className="bg-white p-4 rounded-md mb-[4.27vw]"
+        className="bg-white p-4 rounded-md mb-[4.27vw] desktop:rounded-lg desktop:relative desktop:pl-24 desktop:mb-[1.39vw]"
       >
-        <div className="flex items-center mb-[4.27vw]">
+        <div className="flex items-center mb-[4.27vw] desktop:mb-[0.9vw]">
           <img
-            className="w-[8.53vw] h-[8.53vw] mr-[4.27vw] desktop:w-[2.22vw] desktop:h-[2.22vw]"
+            className="w-[8.53vw] h-[8.53vw] mr-[4.27vw] desktop:w-[2.22vw] desktop:h-[2.22vw] desktop:mr-[1.11vw]"
             src={comment.user.image.png}
           />
-          <p className="font-medium text-[#334253] mr-[4.27vw]">
+          <p className="font-medium text-[#334253] mr-[4.27vw] desktop:mr-[1.11vw]">
             {comment.user.username}
           </p>
           {comment.user.username === currentUser.username && (
-            <p className="p-1 py-0 text-[3.47vw] mr-[4.27vw] rounded-md bg-[#5357B6] text-white">
+            <p className="p-1 py-0 text-[3.47vw] mr-[4.27vw] rounded-md bg-[#5357B6] text-white desktop:text-[0.9vw] desktop:mr-[1.11vw]">
               you
             </p>
           )}
           <p>{comment.createdAt}</p>
         </div>
         <div
-          className={`rounded-md border !resize-none mb-[4.27vw] textarea text-[4.27vw] leading-[6.4vw] break-words ${
+          className={`rounded-md border !resize-none mb-[4.27vw] textarea text-[4.27vw] leading-[6.4vw] break-words desktop:mb-0 ${
             textAreaDisabled === false ? `border-[#5357B6]` : `border-white`
           }`}
         >
-          <p className={`text-[#5357B6] font-medium`}>
+          <p
+            className={`text-[#5357B6] font-medium desktop:text-[1vw] desktop:leading-[1.67vw] ${
+              !textAreaDisabled && `px-4 pt-2`
+            }`}
+          >
             {comment.replyingTo !== undefined && `@${comment.replyingTo}`}
           </p>
           <TextareaAutosize
             id={comment.id}
-            className={`!resize-none textarea text-[4.27vw] disabled:bg-white leading-[6.4vw] break-words focus:border-none focus:outline-none`}
+            className={`!resize-none textarea text-[4.27vw] disabled:bg-white leading-[6.4vw] break-words focus:border-none focus:outline-none desktop:text-[0.9vw] desktop:leading-[1.5vw] desktop:mb-[1vw] ${
+              !textAreaDisabled && `px-4 pt-1`
+            }`}
             onChange={(e) => updateEditValue(e.target.value)}
             disabled={textAreaDisabled}
             defaultValue={comment.content}
           />
         </div>
         <div className="flex justify-between items-center">
-          <div className="flex justify-between font-medium bg-[#F5F6FA] px-4 py-2 rounded-lg min-w-[20vw]">
+          <div
+            className="flex justify-between font-medium bg-[#F5F6FA] px-4 py-2 rounded-lg min-w-[20vw] desktop:flex-col desktop:min-w-[2.78vw] desktop:items-center desktop:px-2 
+          desktop:absolute desktop:left-0 desktop:top-0 desktop:ml-4 desktop:mt-4 desktop:h-[6vw]"
+          >
             <motion.button
               whileHover={{ scale: 1.6 }}
               whileTap={{ scale: 0.9 }}
-              className="mr-2 text-[#C5C6EF]"
+              className="mr-2 text-[#C5C6EF] desktop:mr-0 desktop:text-[1vw]"
               onClick={() => {
                 increaseScore(comment.id);
                 updateScoreView((prev) => prev + 1);
@@ -216,13 +225,13 @@ function CommentsCard({
             >
               +
             </motion.button>
-            <p className="flex justify-center mr-2 min-w-[10vw] text-[#5357B6]">
+            <p className="flex justify-center mr-2 min-w-[10vw] text-[#5357B6] desktop:mr-0 desktop:min-w-[1.78vw] desktop:text-[0.9vw]">
               {scoreView}
             </p>
             <motion.button
               whileHover={{ scale: 1.6 }}
               whileTap={{ scale: 0.9 }}
-              className="text-[#C5C6EF]"
+              className="text-[#C5C6EF] desktop:text-[1vw]"
               onClick={() => {
                 decreaseScore(comment.id);
                 updateScoreView((prev) => prev - 1);

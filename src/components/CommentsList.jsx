@@ -30,7 +30,7 @@ function CommentsList({
                   comment.replies.map((reply) => {
                     return (
                       <div key={reply.id}>
-                        <div className="pl-4">
+                        <div className="pl-4 desktop:pl-6">
                           <CommentsCard
                             comment={reply}
                             updateCommentsData={updateCommentsData}

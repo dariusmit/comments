@@ -17,7 +17,7 @@ function ReplyButtonsStack({
           <div className="flex gap-2 font-medium">
             {!textAreaDisabled ? (
               <button
-                className="mr-2 text-[#5357B6]"
+                className="mr-2 text-[#5357B6] desktop:mt-2"
                 onClick={() => {
                   updateComment(comment.id);
                 }}
@@ -26,7 +26,10 @@ function ReplyButtonsStack({
               </button>
             ) : (
               <div className="flex items-center justify-center">
-                <img className="mr-[2.13vw]" src="../../images/icon-edit.svg" />
+                <img
+                  className="mr-[2.13vw] desktop:mr-[0.56vw]"
+                  src="../../images/icon-edit.svg"
+                />
                 <button
                   className="mr-2 text-[#5357B6]"
                   onClick={() => changeTextAreaStatus(false)}
@@ -38,7 +41,7 @@ function ReplyButtonsStack({
             {textAreaDisabled && (
               <div className="flex items-center justify-center">
                 <img
-                  className="mr-[2.13vw]"
+                  className="mr-[2.13vw] desktop:mr-[0.56vw]"
                   src="../../images/icon-delete.svg"
                 />
                 <button
@@ -57,9 +60,12 @@ function ReplyButtonsStack({
             updateEditValue("");
             replyToComment(e, comment.id);
           }}
-          className="flex items-center hover:cursor-pointer justify-center w-[17.6vw]"
+          className="flex items-center hover:cursor-pointer justify-center w-[17.6vw] desktop:absolute desktop:top-0 desktop:right-0 desktop:w-auto desktop:mr-4 desktop:mt-4"
         >
-          <img className="mr-[1.6vw]" src="../../images/icon-reply.svg" />
+          <img
+            className="mr-[1.6vw] desktop:mr-[0.42vw]"
+            src="../../images/icon-reply.svg"
+          />
           <button className="text-[#5357B6] font-medium">Reply</button>
         </div>
       )}

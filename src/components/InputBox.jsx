@@ -41,7 +41,7 @@ function InputBox({
       initial={{ opacity: 0, scale: 0.5 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5 }}
-      className="p-[4.27vw] bg-white rounded-md w-full"
+      className="p-[4.27vw] bg-white rounded-md w-full desktop:p-[1.67vw]"
       onSubmit={(e) => {
         e.preventDefault();
         if (inputValue !== "") {
@@ -55,7 +55,7 @@ function InputBox({
     >
       <TextareaAutosize
         id={commentsData.length + 999}
-        className="border rounded-md w-full p-4 focus:outline-none focus:!border-[#5357B6]"
+        className="border resize-none rounded-md w-full p-4 focus:outline-none focus:!border-[#5357B6] desktop:p-[0.83vw]"
         placeholder="add a comment..."
         value={inputValue}
         onChange={(e) => {
@@ -66,7 +66,7 @@ function InputBox({
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
-        className="text-red-500 text-[3.47vw] mb-[3.27vw]"
+        className="text-red-500 text-[3.47vw] mb-[3.27vw] desktop:text-[0.9vw] desktop:mb-[1.11vw]"
       >
         {emptyInputError}
       </motion.p>
