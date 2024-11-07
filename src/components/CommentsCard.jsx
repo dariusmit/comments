@@ -201,7 +201,7 @@ function CommentsCard({
           </p>
           <TextareaAutosize
             id={comment.id}
-            className={`!resize-none textarea text-[4.27vw] text-[#67727E] disabled:bg-white leading-[6.4vw] break-words focus:border-none focus:outline-none desktop:text-[0.9vw] desktop:leading-[1.5vw] desktop:mb-[1vw] ${
+            className={`!resize-none textarea text-[4.27vw] disabled:bg-white disabled:text-#67727E disabled:opacity-100 leading-[6.4vw] break-words focus:border-none focus:outline-none desktop:text-[0.9vw] desktop:leading-[1.5vw] desktop:mb-[1vw] ${
               !textAreaDisabled && `px-4 pt-1`
             }`}
             onChange={(e) => updateEditValue(e.target.value)}
