@@ -37,7 +37,7 @@ function App() {
   }, [idCounter]);
 
   async function getData() {
-    const path = "./src/data/data.json";
+    const path = "./data.json";
     try {
       const req = await fetch(path);
       const res = await req.json();
